@@ -8,14 +8,13 @@ namespace PromotionEngine
         public static double GetTotalPrice(Order order, List<Promotion> availablePromotions)
         {
             List<double> discountedPrices = availablePromotions
-            .Select(promo => GetDiscount(order, promo))
+            .Select(promo => GetDiscountedPrice(order, promo))
             .ToList();
-            double originalPrice = order.Products.Sum(x => x.ProductPrice);
-            double discountedPrice = discountedPrices.Sum();
-            return 0;
+            double finalPrice = discountedPrices.Sum();
+            return finalPrice;
         }
 
-        private static double GetDiscount(Order ord, Promotion prom)
+        private static double GetDiscountedPrice(Order ord, Promotion prom)
         {
             double d = 0;
             //get count of promoted products in order
@@ -30,6 +29,13 @@ namespace PromotionEngine
             {
                 d += prom.PromoPrice;
                 countPromotedProductsInOrder -= countPromotedProductsInPromotion;
+            }
+            foreach(var i in prom.ProductCombos)
+            {
+                int TotalCountInOrder = ord.Products.Count(x => x.ProductId.Equals(i.Key));
+                double productPrice = ord.Products.Where(x => x.ProductId.Equals(i.Key)).Select(x=>x.ProductPrice).FirstOrDefault();
+                var addedPrice = countPromotedProductsInOrder * productPrice;
+                d += addedPrice;
             }
             return d;
         }

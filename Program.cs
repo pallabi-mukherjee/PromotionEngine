@@ -36,7 +36,7 @@ namespace PromotionEngine
             
             Order order = new Order(products);
             var price = OrderService.GetTotalPrice(order, promotions);
-            Console.WriteLine("Total Price of your Cart: ", price);
+            Console.WriteLine("Total Price of your Cart:{0}", price);
 
         }
     }
