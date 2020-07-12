@@ -16,7 +16,7 @@ namespace PromotionEngine
 
         private double GetDiscountedPrice(Order ord, Promotion prom)
         {
-            double d = 0;
+            double discountedPrice = 0;
             //get count of promoted products in order
             var countPromotedProductsInOrder = ord.Products
                 .GroupBy(x => x.ProductId)
@@ -27,7 +27,7 @@ namespace PromotionEngine
             int countPromotedProductsInPromotion = prom.ProductCombos.Sum(kvp => kvp.Value);
             while (countPromotedProductsInOrder >= countPromotedProductsInPromotion)
             {
-                d += prom.PromoPrice;
+                discountedPrice += prom.PromoPrice;
                 countPromotedProductsInOrder -= countPromotedProductsInPromotion;
             }
             foreach(var i in prom.ProductCombos)
@@ -35,9 +35,9 @@ namespace PromotionEngine
                 int TotalCountInOrder = ord.Products.Count(x => x.ProductId.Equals(i.Key));
                 double productPrice = ord.Products.Where(x => x.ProductId.Equals(i.Key)).Select(x=>x.ProductPrice).FirstOrDefault();
                 var addedPrice = countPromotedProductsInOrder * productPrice;
-                d += addedPrice;
+                discountedPrice += addedPrice;
             }
-            return d;
+            return discountedPrice;
         }
     }
 }
