@@ -9,10 +9,10 @@ namespace PromotionEngine
     {
         static int nextId;
         public int PromotionId { get; private set; }
-        public Dictionary<Product, int> ProductCombos { get; set; }
-        public decimal PromoPrice { get; set; }
+        public Dictionary<string, int> ProductCombos { get; set; }
+        public double PromoPrice { get; set; }
 
-        public Promotion(Dictionary<Product, int> productCombos, decimal promoPrice)
+        public Promotion(Dictionary<string, int> productCombos, double promoPrice)
         {
             PromotionId = Interlocked.Increment(ref nextId); ;
             ProductCombos = productCombos;

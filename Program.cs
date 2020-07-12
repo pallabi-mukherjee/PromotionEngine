@@ -7,17 +7,14 @@ namespace PromotionEngine
     {
         static void Main(string[] args)
         {
-            var productA = new Product("A");
-            var productB = new Product("B");
-            var productC = new Product("C");
-            var productD = new Product("D");
-            var promotionCombo1 = new Dictionary<Product, int>();
-            promotionCombo1.Add(productA, 3);
-            var promotionCombo2 = new Dictionary<Product, int>();
-            promotionCombo2.Add(productB, 2);
-            var promotionCombo3 = new Dictionary<Product, int>();
-            promotionCombo3.Add(productC, 1);
-            promotionCombo3.Add(productD, 1);
+
+            var promotionCombo1 = new Dictionary<string, int>();
+            promotionCombo1.Add("A", 3);
+            var promotionCombo2 = new Dictionary<string, int>();
+            promotionCombo2.Add("B", 2);
+            var promotionCombo3 = new Dictionary<string, int>();
+            promotionCombo3.Add("C", 1);
+            promotionCombo3.Add("D", 1);
             List<Promotion> promotions = new List<Promotion>()
             {
                 new Promotion(promotionCombo1,130),
@@ -38,7 +35,8 @@ namespace PromotionEngine
             }
             
             Order order = new Order(products);
-
+            var price = OrderService.GetTotalPrice(order, promotions);
+            Console.WriteLine("Total Price of your Cart: ", price);
 
         }
     }
