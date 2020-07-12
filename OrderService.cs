@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace PromotionEngine
 {
-    public static class OrderService
+    public class OrderService:IOrderService
     {
-        public static double GetTotalPrice(Order order, List<Promotion> availablePromotions)
+        public double GetTotalPrice(Order order, List<Promotion> availablePromotions)
         {
             List<double> discountedPrices = availablePromotions
             .Select(promo => GetDiscountedPrice(order, promo))
@@ -14,7 +14,7 @@ namespace PromotionEngine
             return finalPrice;
         }
 
-        private static double GetDiscountedPrice(Order ord, Promotion prom)
+        private double GetDiscountedPrice(Order ord, Promotion prom)
         {
             double d = 0;
             //get count of promoted products in order

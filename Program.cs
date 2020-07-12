@@ -28,14 +28,15 @@ namespace PromotionEngine
             int numbeOfProducts = Convert.ToInt32(Console.ReadLine());
             for (int i = 0; i < numbeOfProducts; i++)
             {
-                Console.WriteLine("enter the Products:");
+                Console.WriteLine("enter the Products in your Cart:");
                 string product = Console.ReadLine();
                 Product p = new Product(product);
                 products.Add(p);
             }
             
             Order order = new Order(products);
-            var price = OrderService.GetTotalPrice(order, promotions);
+            var orderService = new OrderService();
+            var price = orderService.GetTotalPrice(order, promotions);
             Console.WriteLine("Total Price of your Cart:{0}", price);
 
         }
